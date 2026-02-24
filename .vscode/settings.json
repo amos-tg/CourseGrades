@@ -1,0 +1,30 @@
+{
+    // Keep the build folder out of your source tree
+    "cmake.buildDirectory": "${workspaceFolder}/build",
+
+    // Always use the CMake Tools extension as the IntelliSense provider
+    "C_Cpp.intelliSenseEngine": "default",
+    "C_Cpp.intelliSenseEngineFallback": "Disabled",
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+
+    // Use a clean, consistent terminal experience
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+
+    // Format on save (optional but highly recommended)
+    "editor.formatOnSave": true,
+
+    // Use clang-format if available (optional)
+    "C_Cpp.clang_format_fallbackStyle": "Google",
+
+    // Keep VS Code from generating unwanted files
+    "files.exclude": {
+        "**/.git": true,
+        "**/.DS_Store": true,
+        "**/build": true
+    },
+
+    // Keep search results clean
+    "search.exclude": {
+        "**/build": true
+    }
+}
