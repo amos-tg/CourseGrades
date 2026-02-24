@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 # Project name and language
-project(MyProject LANGUAGES CXX)
+project(CourseGrades LANGUAGES CXX)
 
 # Set C++ standard (change to 17 or 20 if you prefer)
 set(CMAKE_CXX_STANDARD 20)
