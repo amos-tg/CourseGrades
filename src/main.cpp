@@ -31,6 +31,8 @@ void letterGrade(Student* Student_data);
 
 void printReport(const Student* Student_data);
 
+void deallocate(StudentSet &student_set);
+
 int main(int argc, char *argv[]) 
 {
   const char* ARG_ERR = 
@@ -45,6 +47,9 @@ int main(int argc, char *argv[])
   filesystem::path student_data_path { argv[1] };
 
   StudentSet student_set { getStudentData(student_data_path) };
+
+
+  deallocate(student_set);
 
   return 0;
 }
@@ -93,4 +98,16 @@ StudentSet getStudentData(const filesystem::path &data_path)
   }
 
   return student_set;
+}
+
+void deallocate(StudentSet &student_set) 
+{
+  // deallocates all the test_scores arrays
+  for (int i {}; i < student_set.num_students; ++i) 
+  {
+    delete [] student_set.students[i].test_scores;
+  }
+
+  // deallocates the students structs
+  delete [] student_set.students;
 }
