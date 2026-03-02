@@ -1,5 +1,3 @@
-#define EXPECTED_NUM_ARGS 2
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -25,18 +23,19 @@ struct StudentSet
 
 StudentSet getStudentData(const filesystem::path &data_path);
 
-void calcAverages(Student* student_data);
+void calcAverages(Student &student_data);
 
-void letterGrade(Student* Student_data);
+void letterGrade(Student &Student_data);
 
-void printReport(const Student* Student_data);
+void printReport(const StudentSet &Student_data);
 
 void deallocate(StudentSet &student_set);
 
 int main(int argc, char *argv[]) 
 {
+  const int EXPECTED_NUM_ARGS { 2 };
   const char* ARG_ERR = 
-    "Error: pass file path as argument, i.e. \
+    "Error: pass student scores file path as argument, i.e. \
     ( ./CourseGrades student_scores.txt )";
 
   if (argc < EXPECTED_NUM_ARGS) {
@@ -48,6 +47,13 @@ int main(int argc, char *argv[])
 
   StudentSet student_set { getStudentData(student_data_path) };
 
+  for (int i {}; i < student_set.num_students; ++i) 
+  {
+    calcAverages(student_set.students[i]);
+    letterGrade(student_set.students[i]);
+  }
+  
+  printReport(student_set);
 
   deallocate(student_set);
 
@@ -74,7 +80,7 @@ StudentSet getStudentData(const filesystem::path &data_path)
 
   if (!data_file) 
   {
-    cerr << FFORMAT_ERR << endl;    
+    cerr << FFORMAT_ERR << " @" << data_path << endl;
     exit(EXIT_FAILURE);
   }
 
