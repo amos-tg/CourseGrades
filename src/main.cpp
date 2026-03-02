@@ -118,14 +118,37 @@ void calcAverages(StudentSet &student_data)
   }
 }
 
-void letterGrades(Student &Student_data) 
+void letterGrades(StudentSet &student_data) 
 {
+  for (int i {}; i < student_data.num_students; ++i) 
+  {
+    Student &student { student_data.students[i] };
 
+    if (student.average_score >= 90) 
+    {
+      student.grade = 'A';
+    }
+    else if (student.average_score >= 80)
+    {
+      student.grade = 'B';
+    }
+    else if (student.average_score >= 70)
+    {
+      student.grade = 'C';
+    }
+    else if (student.average_score >= 60)
+    {
+      student.grade = 'D';
+    }
+    else 
+    {
+      student.grade = 'F';
+    }
+  }
 }
 
-void printReport(const StudentSet &Student_data) 
+void printReport(const StudentSet &student_data) 
 {
-
 }
 
 void deallocate(StudentSet &student_set) 
