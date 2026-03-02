@@ -23,9 +23,9 @@ struct StudentSet
 
 StudentSet getStudentData(const filesystem::path &data_path);
 
-void calcAverages(Student &student_data);
+void calcAverages(StudentSet &student_data);
 
-void letterGrade(Student &Student_data);
+void letterGrades(StudentSet &Student_data);
 
 void printReport(const StudentSet &Student_data);
 
@@ -47,11 +47,8 @@ int main(int argc, char *argv[])
 
   StudentSet student_set { getStudentData(student_data_path) };
 
-  for (int i {}; i < student_set.num_students; ++i) 
-  {
-    calcAverages(student_set.students[i]);
-    letterGrade(student_set.students[i]);
-  }
+  calcAverages(student_set);
+  letterGrades(student_set);
   
   printReport(student_set);
 
@@ -104,6 +101,31 @@ StudentSet getStudentData(const filesystem::path &data_path)
   }
 
   return student_set;
+}
+
+void calcAverages(StudentSet &student_data) 
+{
+  for (int i {}; i < student_data.num_students; ++i) 
+  {
+    Student &student { student_data.students[i] };
+
+    for (int ii {}; i < student_data.num_tests; ++i)
+    {
+      student.average_score += student.test_scores[ii];
+    }
+
+    student.average_score /= student_data.num_tests;
+  }
+}
+
+void letterGrades(Student &Student_data) 
+{
+
+}
+
+void printReport(const StudentSet &Student_data) 
+{
+
 }
 
 void deallocate(StudentSet &student_set) 
