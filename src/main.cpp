@@ -1,8 +1,10 @@
+#include <iomanip>
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <filesystem>
 #include <cstdlib>
+#include <sstream>
 
 using namespace std;
 
@@ -94,7 +96,7 @@ StudentSet getStudentData(const filesystem::path &data_path)
     // only going to run the error check here on data_file because it could 
     // loop infinitely otherwise and it will pick up the other extraction
     // errors if they happen anyways.
-    for (int ii {}; i < num_tests && !data_file; ++i) 
+    for (int ii {}; ii < num_tests && !data_file; ++ii) 
     {
       data_file >> student_set.students[i].test_scores[ii];
     }
@@ -109,7 +111,7 @@ void calcAverages(StudentSet &student_data)
   {
     Student &student { student_data.students[i] };
 
-    for (int ii {}; i < student_data.num_tests; ++i)
+    for (int ii {}; ii < student_data.num_tests; ++ii)
     {
       student.average_score += student.test_scores[ii];
     }
@@ -149,6 +151,45 @@ void letterGrades(StudentSet &student_data)
 
 void printReport(const StudentSet &student_data) 
 {
+  // |----------|------|---------------|-------|
+  // | Name     | ID   | Average Score | Grade |
+  // |----------|------|---------------|-------|
+  //
+  // | ? | 4 | 3 | 1 |
+
+  size_t num_columns { 37 }, longest_name {};
+
+  for (int i {}; i < student_data.num_students; ++i)
+  {
+    if (longest_name < student_data.students[i].name.size()) 
+      longest_name = student_data.students[i].name.size();
+  }
+
+  num_columns += longest_name;
+
+  const char *SEPR { " | " };
+  const string LINE_SEPR(num_columns, '-');
+
+  const int ID_WDTH { 4 }; 
+  const int AVG_SCORE_WDTH { 13 };
+  const int GRADE_WDTH { 5 };
+
+  cout << left << SEPR << setw(longest_name) << "Name" << SEPR
+    << setw(ID_WDTH) << "ID" << SEPR
+    << setw(AVG_SCORE_WDTH) << "Average Score" << SEPR
+    << setw(GRADE_WDTH) << "Grade" << SEPR
+    << '\n' << LINE_SEPR << endl;
+
+  for (int i {}; i < student_data.num_students; ++i)
+  {
+    const Student &student { student_data.students[i] };
+
+    cout << SEPR << setw(longest_name) << student.name << SEPR
+      << setw(ID_WDTH) << student.id << SEPR
+      << setw(AVG_SCORE_WDTH) << student.average_score << SEPR
+      << setw(GRADE_WDTH) << student.grade << SEPR
+      << '\n' << LINE_SEPR << endl;
+  }                                     
 }
 
 void deallocate(StudentSet &student_set) 
