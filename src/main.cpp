@@ -195,6 +195,9 @@ void calcAverages(StudentSet &student_data)
     // helps with readability
     Student &student { student_data.students[i] };
 
+    // initialize the average field
+    student.average_score = 0.0;
+
     // iterate over students test_scores to produce a total
     for (int ii {}; ii < student_data.num_tests; ++ii)
     {
